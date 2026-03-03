@@ -4,7 +4,7 @@ import numpy as np
 ##################  VARIABLES  ##################
 DATA_SIZE = "1k" # ["1k", "200k", "all"]
 CHUNK_SIZE = 200
-GCP_PROJECT = "lewagon-472907"
+GCP_PROJECT = "lewagon-480212"
 GCP_PROJECT_WAGON = "wagon-public-datasets"
 BQ_DATASET = "taxifare"
 BQ_REGION = "EU"
