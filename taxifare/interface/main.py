@@ -230,6 +230,7 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
         passenger_count=[1],
     ))
 
+
     model = load_model()
     assert model is not None
 

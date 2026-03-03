@@ -93,3 +93,27 @@ def load_model(stage="Production") -> keras.Model:
         print("✅ Model loaded from local disk")
 
         return latest_model
+
+    if MODEL_TARGET == "gcs":
+        print(Fore.BLUE + f"\nLoad latest model from GCS..." + Style.RESET_ALL)
+
+        client = storage.Client()
+        bucket = client.bucket(BUCKET_NAME)
+
+        blobs = list(bucket.list_blobs(prefix="models/"))
+
+        if not blobs:
+            return None
+
+        most_recent_blob = sorted(blobs, key=lambda x: x.updated)[-1]
+
+        model_filename = most_recent_blob.name.split("/")[-1]
+        local_model_path = os.path.join(LOCAL_REGISTRY_PATH, "models", model_filename)
+
+        most_recent_blob.download_to_filename(local_model_path)
+
+        latest_model = keras.models.load_model(local_model_path)
+
+        print("✅ Model loaded from GCS")
+
+        return latest_model
